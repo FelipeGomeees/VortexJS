@@ -11,6 +11,10 @@ class vortex {
         let lastTime = performance.now();
     
         const loop = (currentTime) => {
+            this.ctx.clearRect(0, 0, this.vw, this.vh);
+            this.ctx.fillStyle = scene.bgColor;
+            this.ctx.fillRect(0, 0, this.vw, this.vh);
+
             if (scene.entities.length) {
                 scene.entities.forEach(entity => {
                     this.ctx.fillStyle = entity.color;
@@ -23,6 +27,7 @@ class vortex {
     
             scene.loop(delta);
     
+
             requestAnimationFrame(loop);
         }
     
@@ -37,22 +42,21 @@ class vortex {
         body.style.margin = '0';
         body.style.overflow = 'hidden';
 
-        const vw = 1280;
-        const vh = 720;
-    
+        this.vw = 1280;
+        this.vh = 720;
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-    
-        const scaleX = canvas.width / vw;
-        const scaleY = canvas.height / vh;
-    
+
+        const scaleX = canvas.width / this.vw;
+        const scaleY = canvas.height / this.vh;
+
         const scale = Math.min(scaleX, scaleY);
+
+        this.ctx.setTransform(scale, 0, 0, scale, 0, 0);
     
         this.ctx.setTransform(scale, 0, 0, scale, 0, 0); 
     
         if (options.scene) {
-            this.ctx.fillStyle = options.scene.bgColor;
-            this.ctx.fillRect(0, 0, vw, vh);
             this.Setup(options.scene);
             this.GameLoop(options.scene);
         }

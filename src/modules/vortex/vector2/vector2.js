@@ -5,28 +5,32 @@ export class Vector2 {
     }
 
     Add(v = new Vector2(0, 0)) {
-        this.x + v.x;
-        this.y + v.y;
+        return new Vector2(this.x + v.x, this.y + v.y);
     }
 
-    Subtract(v1, v2) {
-        return new Vector2(v1.x - v2.x, v1.y - v2.y);
+    Subtract(v) {
+        return new Vector2(this.x - v.x, this.y - v.y);
     }
 
-    static Normalize(v) {
-        const length = Math.sqrt(v.x * v.x + v.y * v.y);
-        return new Vector2(v.x / length, v.y / length);
+    Normalize() {
+        const length = this.Magnitude();
+        if (length === 0) return new Vector2(0, 0);
+        return new Vector2(this.x / length, this.y / length);
     }
 
-    static Dot(v1, v2) {
-        return v1.x * v2.x + v1.y * v2.y;
+    Dot(v) {
+        return this.x * v.x + this.y * v.y;
     }
 
-    static Scale(v, scalar) {
-        return new Vector2(v.x * scalar, v.y * scalar);
+    Scale(scalar) {
+        return new Vector2(this.x * scalar, this.y * scalar);
     }
 
-    static Magnitude(v) {
-        return Math.sqrt(v.x * v.x + v.y * v.y);
+    Magnitude() {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+
+    Equals(v) {
+        return this.x === v.x && this.y === v.y;
     }
 }
