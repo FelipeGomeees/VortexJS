@@ -1,4 +1,4 @@
-import { SceneControl } from "../../vortex.js";
+import { SceneControl, MovementControl } from "../../vortex.js";
 
 class vortex {
 
@@ -22,10 +22,13 @@ class vortex {
             this.ctx.fillRect(0, 0, this.vw, this.vh);
 
             if (scene.entities.length) {
-                scene.entities.forEach(entity => {
+                for (const entity in scene.entities) {
                     this.ctx.fillStyle = entity.color;
                     this.ctx.fillRect(entity.position.x, entity.position.y, entity.size.x, entity.size.y);
-                });
+                }
+                for (const entity in scene.entities) {
+                    entity.position = entity.position.Add(entity.getVelocity());
+                }
             }
 
             const delta = currentTime - lastTime;

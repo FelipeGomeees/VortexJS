@@ -5,5 +5,6 @@ export const player = new Entity({
     size: new Vector2(100, 100), 
     color: "#FF0000",
     speed: 4,
+    speedModifiers: [],
     direction: new Vector2(0, 0),
 });

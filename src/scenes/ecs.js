@@ -17,24 +17,21 @@ currentScene.setSetup(() => {
 });
 
 currentScene.setLoop((delta) => {
-    let inputDirection = new Vector2(0, 0);
 
-    if (pressedKeys["d"]) inputDirection = inputDirection.Add(new Vector2(1, 0));
-    if (pressedKeys["a"]) inputDirection = inputDirection.Add(new Vector2(-1, 0));
-    if (pressedKeys["w"]) inputDirection = inputDirection.Add(new Vector2(0, -1));
-    if (pressedKeys["s"]) inputDirection = inputDirection.Add(new Vector2(0, 1));
+    const movementKeyPressed = pressedKeys["d"] || pressedKeys["a"] || pressedKeys["w"] || pressedKeys["s"];
 
-    if (!inputDirection.Equals(new Vector2(0, 0))) {
-        const normalized = inputDirection.Normalize();
+    if (pressedKeys["d"]) player.direction = player.direction.Add(new Vector2(1, 0));
+    if (pressedKeys["a"]) player.direction = player.direction.Add(new Vector2(-1, 0));
+    if (pressedKeys["w"]) player.direction = player.direction.Add(new Vector2(0, -1));
+    if (pressedKeys["s"]) player.direction = player.direction.Add(new Vector2(0, 1));
 
-        let speed = 4;
-        if (pressedKeys["shift"]) speed = 8;
-        const velocity = normalized.Scale(speed);
+    if (!movementKeyPressed) player.speedModifiers.push(['*', 0]);
 
-        player.position = player.position.Add(velocity);
+    if (!player.direction.Equals(new Vector2(0, 0))) {
+        if (pressedKeys["shift"]) player.speedModifiers.push(['*', 2]);
     }
     const fps = 1000 / delta;
-    // console.log(`${fps.toFixed(1)} FPS`)
+    // console.log(`${fps.toFixed(1)} FPS`)w
 });
 
 

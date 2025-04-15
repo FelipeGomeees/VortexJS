@@ -14,4 +14,8 @@ export class Entity {
         this.speed = speed,
         this.direction = direction;
     }
+
+    getVelocity() {
+        return this.direction.Normalize().Scale(this.speed);
+    }
 }
