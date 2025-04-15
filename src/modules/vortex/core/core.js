@@ -2,15 +2,21 @@ import { SceneControl } from "../../vortex.js";
 
 class vortex {
 
-    Setup(scene) {
-        SceneControl.currentScene = null;
+    Setup() {
+        let scene = SceneControl.currentScene;
+        console.log(SceneControl);
         scene.setup();
     }
 
-    GameLoop(scene) {
+    GameLoop() {
         let lastTime = performance.now();
+        let scene = SceneControl.currentScene;
     
         const loop = (currentTime) => {
+            if (SceneControl.refresh) {
+                scene = SceneControl.currentScene;
+                this.Setup(scene);
+            }
             this.ctx.clearRect(0, 0, this.vw, this.vh);
             this.ctx.fillStyle = scene.bgColor;
             this.ctx.fillRect(0, 0, this.vw, this.vh);
@@ -42,8 +48,8 @@ class vortex {
         body.style.margin = '0';
         body.style.overflow = 'hidden';
 
-        this.vw = 1280;
-        this.vh = 720;
+        this.vw = options.width || 1280;
+        this.vh = options.height || 720;
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
@@ -53,17 +59,28 @@ class vortex {
         const scale = Math.min(scaleX, scaleY);
 
         this.ctx.setTransform(scale, 0, 0, scale, 0, 0);
-    
-        this.ctx.setTransform(scale, 0, 0, scale, 0, 0); 
+
+        window.addEventListener("resize", () => this.HandleResize());
     
         if (options.scene) {
-            this.Setup(options.scene);
-            this.GameLoop(options.scene);
+            SceneControl.setCurrentScene(options.scene.name)
+            this.Setup();
+            this.GameLoop();
         }
     }
 
-    static SetScene(scene) {
+    HandleResize() {
+        const canvas = this.ctx.canvas;
 
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    
+        const scaleX = canvas.width / this.vw;
+        const scaleY = canvas.height / this.vh;
+    
+        const scale = Math.min(scaleX, scaleY);
+    
+        this.ctx.setTransform(scale, 0, 0, scale, 0, 0);
     }
     
 }

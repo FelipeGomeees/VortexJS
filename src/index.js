@@ -1,7 +1,9 @@
 
+// From the package
 import { Vortex } from "./modules/vortex.js";
 
-import firstScene from "./scenes/forest.js";
+// Custom made scene
+import firstScene from "./scenes/firstMap.js";
 
 window.addEventListener("DOMContentLoaded", Vortex.Start({
     scene: firstScene,

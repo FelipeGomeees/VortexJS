@@ -1,10 +1,9 @@
-class sceneControl {
+class inputControl {
     constructor() {
-        this.scenes = {};
-        this.currentScene = null;
+        this.activeSchema = {}
     }
 
-    addScene(name, scene) {
+    AddKeyDown(name, scene) {
         this.scenes[name] = scene;
     }
 
@@ -16,4 +15,4 @@ class sceneControl {
     }
 }
 
-export const SceneControl = new sceneControl();
+export const InputControl = new inputControl();
