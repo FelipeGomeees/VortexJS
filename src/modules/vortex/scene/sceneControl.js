@@ -9,8 +9,6 @@ class sceneControl {
     }
 
     setCurrentScene(name) {
-        console.log(name);
-        console.log(this.scenes);
         this.currentScene = this.scenes[name];
         return this.currentScene;
     }

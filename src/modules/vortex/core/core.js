@@ -1,10 +1,9 @@
-import { SceneControl, MovementControl } from "../../vortex.js";
+import { SceneControl, MovementService, InputControl, RenderService } from "../../vortex.js";
 
 class vortex {
 
     Setup() {
         let scene = SceneControl.currentScene;
-        console.log(SceneControl);
         scene.setup();
     }
 
@@ -17,18 +16,17 @@ class vortex {
                 scene = SceneControl.currentScene;
                 this.Setup(scene);
             }
-            this.ctx.clearRect(0, 0, this.vw, this.vh);
-            this.ctx.fillStyle = scene.bgColor;
-            this.ctx.fillRect(0, 0, this.vw, this.vh);
 
             if (scene.entities.length) {
-                for (const entity in scene.entities) {
-                    this.ctx.fillStyle = entity.color;
-                    this.ctx.fillRect(entity.position.x, entity.position.y, entity.size.x, entity.size.y);
-                }
-                for (const entity in scene.entities) {
-                    entity.position = entity.position.Add(entity.getVelocity());
-                }
+                InputControl.Update(this.canvas);
+                const nextMovement = MovementService.Update(scene);
+                nextMovement.forEach((entity) => {
+                    const target = scene.GetEntity(entity.tag);
+                    if (target) {
+                        target.obj.position = entity.nextPosition;
+                    }
+                })
+                RenderService.Update(scene);
             }
 
             const delta = currentTime - lastTime;
@@ -36,7 +34,6 @@ class vortex {
     
             scene.loop(delta);
     
-
             requestAnimationFrame(loop);
         }
     
@@ -44,26 +41,10 @@ class vortex {
     }
 
     Start(options) {
-        const canvas = document.getElementById("vortex").appendChild(document.createElement("canvas"));
-        this.ctx = canvas.getContext("2d");
 
-        const body = document.body;
-        body.style.margin = '0';
-        body.style.overflow = 'hidden';
+        RenderService.Setup(options);
 
-        this.vw = options.width || 1280;
-        this.vh = options.height || 720;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const scaleX = canvas.width / this.vw;
-        const scaleY = canvas.height / this.vh;
-
-        const scale = Math.min(scaleX, scaleY);
-
-        this.ctx.setTransform(scale, 0, 0, scale, 0, 0);
-
-        window.addEventListener("resize", () => this.HandleResize());
+        InputControl.SetupInputs();
     
         if (options.scene) {
             SceneControl.setCurrentScene(options.scene.name)
@@ -71,21 +52,6 @@ class vortex {
             this.GameLoop();
         }
     }
-
-    HandleResize() {
-        const canvas = this.ctx.canvas;
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    
-        const scaleX = canvas.width / this.vw;
-        const scaleY = canvas.height / this.vh;
-    
-        const scale = Math.min(scaleX, scaleY);
-    
-        this.ctx.setTransform(scale, 0, 0, scale, 0, 0);
-    }
-    
 }
 
 export const Vortex = new vortex();

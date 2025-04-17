@@ -9,7 +9,7 @@ export class Scene {
         SceneControl.addScene(name, this);
     }
 
-    addEntity(entity) {
+    AddEntity(entity) {
         this.entities.push(entity);
         return entity;
     }
@@ -21,4 +21,12 @@ export class Scene {
     setLoop(callback) {
         this.loop = callback;
     }
+
+    GetEntity(tag) {
+        return this.entities.find(entity => entity.tag === tag)
+    }
+
+    // ChangeEntity(tag) {
+    //     this.entities.find(entity => entity.tag === tag)
+    // }
 }

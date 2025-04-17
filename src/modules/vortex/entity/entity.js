@@ -5,8 +5,8 @@ export class Entity {
         position = new Vector2(0, 0),
         size = new Vector2(0, 0),
         color,
-        speed = 0,
-        direction = 0,
+        speed = 4,
+        direction = new Vector2(0, 0),
     }) {
         this.position = position;
         this.size = size;
@@ -15,7 +15,5 @@ export class Entity {
         this.direction = direction;
     }
 
-    getVelocity() {
-        return this.direction.Normalize().Scale(this.speed);
-    }
+    
 }
