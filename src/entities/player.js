@@ -2,7 +2,7 @@ import { Entity, Vector2, InputControl } from "../modules/vortex.js";
 
 export const player = new Entity({
     position: new Vector2(50, 50),
-    size: new Vector2(100, 100), 
+    size: new Vector2(30, 30), 
     color: "#FF0000",
     speed: 4,
     // speedModifiers: [],

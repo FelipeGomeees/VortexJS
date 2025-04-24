@@ -1,8 +1,9 @@
 import { checkOutsideBounds } from "../helpers/checkOutsideBounds.js";
 import { Entity, Vector2 } from "../modules/vortex.js";
 import { RenderService } from "../modules/vortex.js";
+import { AudioControl } from "../modules/vortex.js";
 
-const size = new Vector2(100, 100);
+const size = new Vector2(30, 30);
 const bounds = new Vector2(800, 600);
 
 const position = Vector2.RandomWithin(bounds.Subtract(size));
@@ -25,6 +26,7 @@ export const enemyAI = () => {
         if (bounce.y) {
             enemy.direction.y *= -1
         }
+        AudioControl.Play('bounce');
         console.log(bounce, 'bouce');
     }
 };
