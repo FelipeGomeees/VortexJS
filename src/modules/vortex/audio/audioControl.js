@@ -10,6 +10,11 @@ class audioControl {
       const audioBuffer = await this.context.decodeAudioData(arrayBuffer);
       this.buffers.set(name, audioBuffer);
     }
+
+    async LoadAll(soundList) {
+      const promises = soundList.map(({ name, url }) => this.Load(name, url));
+      await Promise.all(promises);
+    }
   
     Play(name, options = {}) {
       const buffer = this.buffers.get(name);
@@ -17,7 +22,7 @@ class audioControl {
         console.warn(`Sound "${name}" not found`);
         return;
       }
-  
+
       const source = this.context.createBufferSource();
       source.buffer = buffer;
   

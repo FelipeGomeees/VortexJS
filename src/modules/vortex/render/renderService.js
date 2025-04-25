@@ -1,8 +1,9 @@
+import { SpriteControl } from "./spriteControl.js";
+
 class renderService {
     constructor() {
         this.vw = 0;
-        this.vh = 0;
-        
+        this.vh = 0;   
     }
 
     Setup(options) {
@@ -33,16 +34,39 @@ class renderService {
         this.ctx.clearRect(0, 0, this.vw, this.vh);
         this.ctx.fillStyle = scene.bgColor;
         this.ctx.fillRect(0, 0, this.vw, this.vh);
+    
         scene.entities.forEach(ett => {
             const entity = ett.obj;
-            this.ctx.fillStyle = entity.color;
-            this.ctx.fillRect(entity.position.x, entity.position.y, entity.size.x, entity.size.y);
+            const spriteInfo = SpriteControl.GetAttached(entity);
+    
+            if (spriteInfo) {
+                const { key, offset } = spriteInfo;
+                const sprite = SpriteControl.Get(key);
+                if (sprite) {
+                    this.ctx.drawImage(
+                        sprite,
+                        entity.position.x + offset.x,
+                        entity.position.y + offset.y,
+                        entity.size.x,
+                        entity.size.y,
+                    );
+                    return;
+                }
+            }
+    
+            // Fallback to color render (e.g., no sprite attached)
+            this.ctx.fillStyle = entity.color || "#f00";
+            this.ctx.fillRect(
+                entity.position.x,
+                entity.position.y,
+                entity.size?.x || 16,
+                entity.size?.y || 16
+            );
         });
     }
+    
 
     HandleResize() {
-        this.canvas = this.ctx.this.canvas;
-
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
     
