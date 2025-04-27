@@ -40,15 +40,21 @@ export class Scene {
     }
 
     GetEntity(tag) {
-        return this.entities.find(entity => entity.tag === tag)
+        return this.entities.filter(entity => entity.tag === tag)
     }
 
-    UpdateEntity(tag, ...entity) {
-        const target = this.entities.find(entity => entity.tag === tag);
-        if (target) {
-            target.obj = { ...target.obj, ...entity[0] };
-        }
+    UpdateEntityByTag(tag, entity) {
+        const targets = this.entities.filter(entity => entity.tag === tag);
+        targets.forEach(target => {
+            target.obj = { ...target.obj, ...entity };   
+        });
     }
+
+    UpdateEntity(entity, updates) {
+        console.log(entity, updates);
+        entity.obj = { ...entity.obj, ...updates };
+    }
+    
 
     Attach(key, entity, offset = new Vector2(0, 0)) {
         if (!this.SpriteControl.sprites.has(key)) {
