@@ -1,4 +1,4 @@
-import { SceneControl, MovementService, InputControl, RenderService } from "../../vortex.js";
+import { SceneControl, MovementService, InputControl, RenderService, SpriteControl } from "../../vortex.js";
 
 class vortex {
 

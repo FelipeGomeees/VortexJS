@@ -10,4 +10,4 @@ export { RenderService } from "./vortex/render/renderService.js"
 export { SceneControl } from "./vortex/scene/sceneControl.js";
 export { InputControl } from "./vortex/input/inputControl.js"
 export { AudioControl } from "./vortex/audio/audioControl.js"
-export { SpriteControl } from "./vortex/render/spriteControl.js"
+export { SpriteControl } from "./vortex/sprite/spriteControl.js"
