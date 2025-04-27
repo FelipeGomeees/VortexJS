@@ -21,10 +21,7 @@ class vortex {
                 InputControl.Update(this.canvas);
                 const nextMovement = MovementService.Update(scene);
                 nextMovement.forEach((entity) => {
-                    const target = scene.GetEntity(entity.tag);
-                    if (target) {
-                        target.obj.position = entity.nextPosition;
-                    }
+                    entity.reference.position = entity.nextPosition;
                 })
                 RenderService.Update(scene);
             }

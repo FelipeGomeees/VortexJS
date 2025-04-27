@@ -1,6 +1,7 @@
 class movementService {
     constructor() {
         this.isActive = true;
+
     }
 
     Update(scene) {
@@ -8,8 +9,8 @@ class movementService {
         return scene.entities.map((entity) => {
             const velocity = entity.obj.direction.Normalize().Scale(entity.obj.speed);
             return {
-                tag: entity.tag,
-                nextPosition: entity.obj.position.Add(velocity)
+                reference: entity.obj,
+                nextPosition: entity.obj.position.Add(velocity) 
             };
         })
     }
