@@ -45,6 +45,5 @@ export const enemyAI = (entity, entityArray) => {
         AudioControl.Play('bounce', {
             volume: 0.4
         });
-        console.log(bounce, 'bouce');
     }
 };

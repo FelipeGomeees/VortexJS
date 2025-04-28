@@ -27,6 +27,6 @@ export const enemyAI = () => {
             enemy.direction.y *= -1
         }
         AudioControl.Play('bounce');
-        console.log(bounce, 'bouce');
     }
 };
+sd

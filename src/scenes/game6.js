@@ -41,7 +41,9 @@ patrolScene.setSetup(() => {
     thisTarget.obj.position = new Vector2(RenderService.vw - 50, RenderService.vh - 50)
 
     setTimeout(() => {
-        AudioControl.Play('stage');   
+        AudioControl.Play('stage', {
+            volume: 0.2,
+        });   
     }, 1000);
 });
 
@@ -61,6 +63,10 @@ patrolScene.setLoop(() => {
         if (checkCollision(thisPlayer.obj, thisEnemy.obj)) {
             AudioControl.Play('defeat');
             console.log("💥 Player hit the enemy!")
+            console.log('points', points);
+            console.log('highScore', highScore);
+            points = 0;
+            // thisPlayer.obj.position = new Vector2(50, 50);
             resetEnemies();
             thisEnemies.push(patrolScene.AddEntity({ tag: 'enemy', obj: newEnemy(), canMove: true, attachedSprite: 'enemy' }));
         }
