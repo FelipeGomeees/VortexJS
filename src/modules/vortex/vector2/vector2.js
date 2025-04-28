@@ -38,6 +38,10 @@ export class Vector2 {
         return this.x === v.x && this.y === v.y;
     }
 
+    BiggerThan(v) {
+        return this.x > v.x && this.y > v.y;
+    }
+
     Clamp(min, max) {
         return new Vector2(
             Math.min(Math.max(this.x, min.x), max.x),
@@ -60,11 +64,21 @@ export class Vector2 {
     static RandomWithin(max) {
         return new Vector2(Math.random() * max.x, Math.random() * max.y);
     }
+    
 
     static RandomBetween(min, max) {
         return new Vector2(
             Math.random() * (max.x - min.x) + min.x,
             Math.random() * (max.y - min.y) + min.y
+        );
+    }
+
+    static Rotate(vector, angle) {
+        const cosAngle = Math.cos(angle);
+        const sinAngle = Math.sin(angle);
+        return new Vector2(
+            vector.x * cosAngle - vector.y * sinAngle, 
+            vector.x * sinAngle + vector.y * cosAngle
         );
     }
 }
