@@ -54,6 +54,10 @@ export class Scene {
         console.log(entity, updates);
         entity.obj = { ...entity.obj, ...updates };
     }
+
+    RemoveEntityByTag(tag) {
+        this.entities = this.entities.filter(entity => entity.tag !== tag);
+    }
     
 
     Attach(key, entity, offset = new Vector2(0, 0)) {
