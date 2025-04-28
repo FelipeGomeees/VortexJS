@@ -6,12 +6,13 @@ import { AudioControl, Entity } from "../modules/vortex.js";
 import { target } from "../entities/game3/target.js";
 import { newSpinner, spinnerAI } from "../entities/game3/blue.js";
 
-const patrolScene = new Scene("enemyTest", "#eee", true);
+const patrolScene = new Scene("enemyTest", "#eee", false);
 
 let thisPlayer, thisTarget;
 let thisEnemies = []
 
 let points = 0;
+let highScore = 0;
 
 patrolScene.setSetup(() => {
     AudioControl.Load('bounce', 'src/assets/audio/bounce.wav');
@@ -25,7 +26,7 @@ patrolScene.setSetup(() => {
 
     thisPlayer = patrolScene.AddEntity({ tag: 'player', obj: player, canMove: true, attachedSprite: 'player' });
 
-    thisEnemies.push(patrolScene.AddEntity({ tag: 'enemy', obj: newEnemy(), canMove: true, attachedSprite: 'enemy' }));
+    thisEnemies.push(patrolScene.AddEntity({ tag: 'spinner', obj: newSpinner(), canMove: true, attachedSprite: 'spinner' }));
 
     thisTarget = patrolScene.AddEntity({ tag: 'target', obj: target, canMove: false, attachedSprite: 'target' });
 
@@ -46,7 +47,6 @@ patrolScene.setLoop(() => {
         if (checkCollision(thisPlayer.obj, thisEnemy.obj)) {
             AudioControl.Play('defeat');
             console.log("💥 Player hit the enemy!")
-            thisPlayer.obj.position = new Vector2(50, 50);
             patrolScene.RemoveEntityByTag('enemy');
             patrolScene.RemoveEntityByTag('spinner');
             thisEnemies = [];
@@ -57,10 +57,12 @@ patrolScene.setLoop(() => {
     if (checkCollision(thisPlayer.obj, thisTarget.obj)) {
         AudioControl.Play('victory');
         points++;
+        highScore = Math.max(points, highScore);
         console.log("💥 Player hit the target!");
         thisPlayer.obj.position = new Vector2(50, 50);
         
-        if (true) {
+        const randomEnemy = Math.random() > 0.5 ? 'enemy' : 'spinner';
+        if (randomEnemy == 'enemy') {
             thisEnemies.push(patrolScene.AddEntity({ tag: 'spinner', obj: newSpinner(), canMove: true, attachedSprite: 'spinner' }));
         } else {
             thisEnemies.push(patrolScene.AddEntity({ tag: 'enemy', obj: newSpinner(), canMove: true, attachedSprite: 'enemy' }));
