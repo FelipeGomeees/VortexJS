@@ -46,7 +46,11 @@ class renderService {
         
             scene.entities.forEach((ett, index) => {
                 const entity = ett.obj;
-                lines.push(`[${index}] Tag: ${ett.tag || "none"} | Pos: (${entity.position?.x.toFixed(2) ?? "?"}, ${entity.position?.y.toFixed(2) ?? "?"}) | Size: (${entity.size?.x ?? "?"}, ${entity.size?.y ?? "?"})`);
+                lines.push(`
+[${index}] Tag: ${ett.tag || "none"} |
+Pos: (${entity.position?.x.toFixed(2) ?? "?"}, ${entity.position?.y.toFixed(2) ?? "?"}) | 
+Direction: (${entity.direction?.x.toFixed(2) ?? "?"}, ${entity.direction?.y.toFixed(2) ?? "?"})
+Size (${entity.size?.x.toFixed(2) ?? "?"}, ${entity.size?.y.toFixed(2) ?? "?"})`);
             });
         
             // Draw each line on the canvas
