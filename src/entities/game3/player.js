@@ -7,7 +7,7 @@ export const player = {
     position: new Vector2(50, 50),
     size: new Vector2(30, 30), 
     color: "#FF0000",
-    speed: 4,
+    speed: 5,
     // speedModifiers: [],
     direction: new Vector2(0, 0),
 };
