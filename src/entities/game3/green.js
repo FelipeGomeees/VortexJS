@@ -9,11 +9,12 @@ const bounds = new Vector2(800, 600);
 export function newChaser() {
     const position = Vector2.RandomWithin(bounds.Subtract(size));
     const direction = Vector2.RandomBetween(new Vector2(1, 1), new Vector2(-1, -1))
+    const randomSpeed = Math.random() > 0.5 ? 2 : 3;
     return {
         position: position,
         size: size,
         color: "#00FF00", 
-        speed: 3,
+        speed: randomSpeed ,
         direction: direction,
     }
 }
