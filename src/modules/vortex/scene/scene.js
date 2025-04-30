@@ -1,7 +1,9 @@
 import { Entity, SceneControl, SpriteControl } from "../../vortex.js";
+import { UIEntity } from "../ui/ui.js";
 
 export class Scene {
     entities = [];
+    ui = [];
     constructor(name = "Scene", bgColor = "#000000", debug = false) {
         this.name = name;
         this.bgColor = bgColor;
@@ -28,6 +30,15 @@ export class Scene {
             obj: new Entity(entity.obj),
         };
         this.entities.push(newEntity);
+        return newEntity;
+    }
+
+    AddUIEntity(entity) {
+        const newEntity = {
+            ...entity,
+            obj: entity.obj,
+        };
+        this.ui.push(newEntity);
         return newEntity;
     }
 
