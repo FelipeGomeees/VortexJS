@@ -8,6 +8,7 @@ export class Entity {
         speed = 4,
         direction = new Vector2(0, 0),
         state = {},
+        visible = true,
     }) {
         this.position = position;
         this.size = size;
@@ -15,6 +16,7 @@ export class Entity {
         this.speed = speed,
         this.direction = direction;
         this.state = state;
+        this.visible = visible;
     }
 
     
