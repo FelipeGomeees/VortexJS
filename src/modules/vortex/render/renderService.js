@@ -82,6 +82,8 @@ Size (${entity.size?.x.toFixed(2) ?? "?"}, ${entity.size?.y.toFixed(2) ?? "?"})`
                 entity.size?.y || 16
             );
         });
+
+        scene.ui.forEach(ui => this.renderUIEntity(ui.obj, this.ctx));
     }
     
 
@@ -96,6 +98,39 @@ Size (${entity.size?.x.toFixed(2) ?? "?"}, ${entity.size?.y.toFixed(2) ?? "?"})`
     
         this.ctx.setTransform(scale, 0, 0, scale, 0, 0);
     }
+
+    renderUIEntity(entity, ctx, parentPosition = { x: 0, y: 0 }) {
+        if (!entity.visible) return;
+    
+        const position = {
+            x: parentPosition.x + entity.position.x,
+            y: parentPosition.y + entity.position.y,
+        };
+    
+        if (entity.color) {
+            ctx.fillStyle = entity.color;
+            ctx.fillRect(
+                position.x,
+                position.y,
+                entity.size?.x || 16,
+                entity.size?.y || 16
+            );
+        }
+        if (entity.text) {
+            console.log(entity.text.font);
+            const font = entity.text.font || "Arial";
+            const size = entity.text.size || 16;
+            const color = entity.text.color || "#000";
+            ctx.font = `${size}px ${font}`;
+            ctx.fillStyle = color;
+            ctx.fillText(entity.text.content, position.x, position.y + size);
+        }
+    
+        if (Array.isArray(entity.children)) {
+            entity.children.forEach(child => this.renderUIEntity(child, ctx, position));
+        }
+    }
+    
 }
 
-export const RenderService = new renderService();
+export const RenderService = new renderService();  
